@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmácia Senac - 24h</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos para o botão de WhatsApp e seta indicativa */
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #whatsapp-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    #seta-indicativa {
+      position: fixed;
+      bottom: 80px;
+      right: 40px;
+      font-size: 24px;
+      color: #25D366;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    #seta-indicativa:before {
+      content: "🔽"; /* Ícone de seta para baixo */
+      font-size: 40px;
+    }
+
+    /* Estilos do carrinho e do botão de finalizar */
+    #finalizar-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #finalizar-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Aumentando o tamanho da fonte dos produtos no carrinho */
+    #lista-carrinho li {
+      font-size: 18px;
+    }
+
+    /* Linha separando seções */
+    .linha-separadora {
+      border-top: 2px solid #ccc;
+      margin: 20px 0;
+    }
+
+    /* Estilo da seção de pagamento */
+    #pagamento {
+      margin-top: 20px;
+    }
+
+    #pagamento ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #pagamento li {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    /* Tamanho e estilo do total */
+    #total-valor {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #total-pagamento {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Farmácia Senac - 24h</h1>
+    <h2>Produtos Disponíveis</h2>
+  </header>
+  
+  <main>
+    <!-- Seção de produtos -->
+    <section id="produtos">
+      <div class="produto" data-id="1">
+        <img src="aspirina.jpg" alt="Aspirina">
+        <h3>Aspirina</h3>
+        <p>R$ 10,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="2">
+        <img src="ibuprofeno.jpg" alt="Ibuprofeno">
+        <h3>Ibuprofeno</h3>
+        <p>R$ 12,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="3">
+        <img src="paracetamol.jpg" alt="Paracetamol">
+        <h3>Paracetamol</h3>
+        <p>R$ 9,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="4">
+        <img src="vitamina-c.jpg" alt="Vitamina C">
+        <h3>Vitamina C</h3>
+        <p>R$ 15,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="5">
+        <img src="antialergico.jpg" alt="Antialérgico">
+        <h3>Antialérgico</h3>
+        <p>R$ 11,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="6">
+        <img src="antiinflamatorio.jpg" alt="Anti-Inflamatório em Gel">
+        <h3>Anti-Inflamatório em Gel</h3>
+        <p>R$ 16,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="7">
+        <img src="suplemento.jpg" alt="Suplemento">
+        <h3>Suplemento</h3>
+        <p>R$ 21,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+      <div class="produto" data-id="8">
+        <img src="dipirona.jpg" alt="Dipirona">
+        <h3>Dipirona</h3>
+        <p>R$ 6,99</p>
+        <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
+      </div>
+    </section>
+
+    <!-- Linha separadora -->
+    <div class="linha-separadora"></div>
+
+    <!-- Carrinho de compras -->
+    <section id="carrinho">
+      <h2>Carrinho de Compras</h2>
+      <ul id="lista-carrinho">
+        <!-- Produtos do carrinho serão listados aqui -->
+      </ul>
+      <p>Total: R$ <span id="total-valor">0,00</span></p>
+    </section>
+
+    <!-- Linha separadora -->
+    <div class="linha-separadora"></div>
+
+    <!-- Seção de Pagamento -->
+    <section id="pagamento">
+      <h2>Pagamento</h2>
+      <ul>
+        <li>Pagamento na entrega com Dinheiro</li>
+        <li>Pagamento na entrega com Cartão (Débito/Crédito)</li>
+        <li>Pagamento online (Pix)</li>
+      </ul>
+      <p><strong>Total: R$ <span id="total-pagamento">0,00</span></strong></p>
+    </section>
+
+    <!-- Botão de finalizar compra ao final -->
+    <button id="finalizar-btn">Finalizar Compra</button>
+  </main>
+
+  <!-- Botão para WhatsApp -->
+  <footer>
+    <button id="whatsapp-btn">
+      <img src="whatsapp-icon.png" alt="WhatsApp"> <span>SUPORTE</span>
+    </button>
+    <div id="seta-indicativa"></div>
+  </footer>
+
+  <script>
+    const produtos = [
+      { id: 1, nome: "Aspirina", preco: 10.99, imagem: "aspirina.jpg" },
+      { id: 2, nome: "Ibuprofeno", preco: 12.99, imagem: "ibuprofeno.jpg" },
+      { id: 3, nome: "Paracetamol", preco: 9.99, imagem: "paracetamol.jpg" },
+      { id: 4, nome: "Vitamina C", preco: 15.99, imagem: "vitamina-c.jpg" },
+      { id: 5, nome: "Antialérgico", preco: 11.99, imagem: "antialergico.jpg" },
+      { id: 6, nome: "Anti-Inflamatório em Gel", preco: 16.99, imagem: "antiinflamatorio.jpg" },
+      { id: 7, nome: "Suplemento", preco: 21.99, imagem: "suplemento.jpg" },
+      { id: 8, nome: "Dipirona", preco: 6.99, imagem: "dipirona.jpg" }
+    ];
+
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    // Função para atualizar a lista de produtos no carrinho
+    function atualizarCarrinho() {
+      const listaCarrinho = document.getElementById("lista-carrinho");
+      const totalValor = document.getElementById("total-valor");
+      const totalPagamento = document.getElementById("total-pagamento");
+
+      listaCarrinho.innerHTML = "";
+      let total = 0;
+
+      carrinho.forEach((produto, index) => {
+        const itemHTML = `
+          <li>
+            ${produto.nome} - R$ ${produto.preco.toFixed(2)}
+            <button class="remover-produto" data-index="${index}">Remover</button>
+          </li>
+        `;
+        listaCarrinho.innerHTML += itemHTML;
+        total += produto.preco;
+      });
+
+      totalValor.textContent = total.toFixed(2);
+      totalPagamento.textContent = total.toFixed(2);
+    }
+
+    // Função para adicionar produtos ao carrinho
+    document.querySelectorAll(".adicionar-carrinho").forEach((botao) => {
+      botao.addEventListener("click", (e) => {
+        const produtoId = parseInt(e.target.closest(".produto").getAttribute("data-id"));
+        const produto = produtos.find((p) => p.id === produtoId);
+        carrinho.push(produto);
+        localStorage.setItem("carrinho", JSON.stringify(carrinho)); 
+        atualizarCarrinho();
+      });
+    });
+
+    // Função para remover produtos do carrinho
+    document.getElementById("lista-carrinho").addEventListener("click", (e) => {
+      if (e.target.classList.contains("remover-produto")) {
+        const index = e.target.getAttribute("data-index");
+        carrinho.splice(index, 1);
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        atualizarCarrinho();
+      }
+    });
+
+    // Finalizar compra
+    document.getElementById("finalizar-btn").addEventListener("click", () => {
+      alert("Compra confirmada! Finalize o pagamento.");
+      localStorage.removeItem("carrinho");
+      carrinho = [];
+      atualizarCarrinho();
+    });
+
+    // Redirecionar para o WhatsApp
+    document.getElementById("whatsapp-btn").addEventListener("click", () => {
+      window.open("https://wa.me/123456789", "_blank");
+    });
+
+    // Inicializa o carrinho ao carregar a página
+    atualizarCarrinho();
+  </script>
+</body>
+</html>
